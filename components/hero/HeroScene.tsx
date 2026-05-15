@@ -14,6 +14,8 @@ const RADII_LARGE   = [1.1, 0.9, 0.8]
 const RADII_SMALL   = [0.4, 0.35, 0.3, 0.45, 0.25, 0.35]
 const PARTICLE_COLORS = [0x4169FF, 0x7B00FF, 0x00FF87]
 const COUNT = 5000
+const CHROMATIC_OFFSET = new Vector2(0.002, 0.002)
+const _colors = [new Color(PARTICLE_COLORS[0]), new Color(PARTICLE_COLORS[1]), new Color(PARTICLE_COLORS[2])]
 
 function BackgroundParticles() {
   const meshRef = useRef<InstancedMesh>(null)
@@ -32,8 +34,7 @@ function BackgroundParticles() {
       dummy.current.scale.setScalar(0.02 + (i % 3) * 0.01)
       dummy.current.updateMatrix()
       meshRef.current.setMatrixAt(i, dummy.current.matrix)
-      const col = new Color(PARTICLE_COLORS[i % 3])
-      meshRef.current.setColorAt(i, col)
+      meshRef.current.setColorAt(i, _colors[i % 3])
     }
     meshRef.current.instanceMatrix.needsUpdate = true
     if (meshRef.current.instanceColor) meshRef.current.instanceColor.needsUpdate = true
@@ -77,7 +78,7 @@ export function HeroScene() {
           ))}
           <EffectComposer>
             <Bloom intensity={0.8} luminanceThreshold={0.2} luminanceSmoothing={0.9} />
-            <ChromaticAberration offset={new Vector2(0.002, 0.002)} blendFunction={BlendFunction.NORMAL} radialModulation={false} modulationOffset={0} />
+            <ChromaticAberration offset={CHROMATIC_OFFSET} blendFunction={BlendFunction.NORMAL} radialModulation={false} modulationOffset={0} />
             <Vignette eskil={false} offset={0.3} darkness={0.4} />
           </EffectComposer>
         </Suspense>

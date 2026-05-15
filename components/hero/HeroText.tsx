@@ -9,7 +9,8 @@ export function HeroText() {
 
   useEffect(() => {
     if (loading || !ref.current) return
-    gsap.fromTo(ref.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1, delay: 0.3, ease: 'power3.out' })
+    const tween = gsap.fromTo(ref.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1, delay: 0.3, ease: 'power3.out' })
+    return () => { tween.kill() }
   }, [loading])
 
   return (
