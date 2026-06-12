@@ -1,0 +1,24 @@
+<svg width="1600" height="1000" viewBox="0 0 1600 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="1000" fill="#0a0a0a"/>
+  <defs>
+    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#A100F2; stop-opacity:0.5" />
+      <stop offset="100%" style="stop-color:#00D9FF; stop-opacity:0.5" />
+    </linearGradient>
+  </defs>
+
+  <!-- Scan Rings -->
+  <g transform="translate(800, 500)" opacity="0.4">
+    <circle cx="0" cy="0" r="100" stroke="url(#grad2)" stroke-width="2" fill="none" />
+    <circle cx="0" cy="0" r="250" stroke="url(#grad2)" stroke-width="1.5" fill="none" />
+    <circle cx="0" cy="0" r="450" stroke="url(#grad2)" stroke-width="1" fill="none" opacity="0.5" />
+    <ellipse cx="0" cy="0" rx="600" ry="300" stroke="url(#grad2)" stroke-width="0.5" fill="none" opacity="0.3" />
+  </g>
+  
+  <!-- Floating Panels -->
+  <g transform="translate(0, 50)">
+    <rect x="300" y="200" width="500" height="300" fill="#F4F2EE" opacity="0.05" rx="10" transform="rotate(-5 550 350)" />
+    <rect x="800" y="400" width="600" height="400" fill="#F4F2EE" opacity="0.08" rx="10" transform="rotate(8 1100 600)" />
+    <rect x="450" y="550" width="400" height="250" fill="#F4F2EE" opacity="0.03" rx="10" transform="rotate(-2 650 675)" />
+  </g>
+</svg>

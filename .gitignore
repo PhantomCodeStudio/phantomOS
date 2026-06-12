@@ -18,18 +18,43 @@
 
 # misc
 .DS_Store
+Thumbs.db
 *.pem
 
 # debug
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
 # local env files
+.env
+.env.*
 .env*.local
 
 # vercel
 .vercel
+
+# cache
+.cache/
+
+# build artifacts
+dist/
+
+# archives
+*.zip
+*.rar
+*.7z
+
+# source dumps / legacy folders
+raw/awwwards-components/
+old/
+Old/
+Master Design/
+master-design/
+downloads/
+temp/
+tmp/
 
 # typescript
 *.tsbuildinfo
