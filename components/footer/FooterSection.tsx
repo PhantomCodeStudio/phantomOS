@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { MetaballCanvas } from './MetaballCanvas'
 import { FooterLogo }     from './FooterLogo'
 import { ContactForm }    from './ContactForm'
+import { FooterSignature } from './FooterSignature'
 
 const SOCIALS = [
   { name: 'Instagram', href: 'https://instagram.com/phantomcode' },
@@ -56,10 +57,7 @@ export function FooterSection() {
             </div>
           </div>
         </div>
-
-        <p className="mt-24 font-mono text-[0.6rem] tracking-widest uppercase text-black/30">
-          Phantom Code © 2025 — Immersive by Design
-        </p>
+        <FooterSignature />
       </div>
     </footer>
   )

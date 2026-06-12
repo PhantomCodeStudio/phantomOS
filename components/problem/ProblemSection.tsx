@@ -30,20 +30,24 @@ export function ProblemSection() {
 
   useEffect(() => {
     if (!sectionRef.current) return
-    const beats = sectionRef.current.querySelectorAll<HTMLElement>('.beat')
-    beats.forEach((beat) => {
-      gsap.fromTo(
-        beat,
-        { opacity: 0, y: reducedMotion ? 0 : 40 },
-        {
-          opacity: 1, y: 0,
-          duration: reducedMotion ? 0.001 : 1,
-          ease: 'power3.out',
-          scrollTrigger: { trigger: beat, start: 'top 65%', toggleActions: 'play none none none' },
-        }
-      )
-    })
-    return () => { ScrollTrigger.getAll().forEach((t) => t.kill()) }
+
+    const ctx = gsap.context(() => {
+      const beats = sectionRef.current!.querySelectorAll<HTMLElement>('.beat')
+      beats.forEach((beat) => {
+        gsap.fromTo(
+          beat,
+          { opacity: 0, y: reducedMotion ? 0 : 40 },
+          {
+            opacity: 1, y: 0,
+            duration: reducedMotion ? 0.001 : 1,
+            ease: 'power3.out',
+            scrollTrigger: { trigger: beat, start: 'top 65%', toggleActions: 'play none none none' },
+          }
+        )
+      })
+    }, sectionRef)
+
+    return () => ctx.revert()
   }, [reducedMotion])
 
   return (

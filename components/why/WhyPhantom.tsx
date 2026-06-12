@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
+import { AnimatedVerbs } from '@/components/typography/AnimatedVerbs'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useStore } from '@/lib/store'
 
@@ -40,36 +41,45 @@ export function WhyPhantom() {
 
   useEffect(() => {
     if (!sectionRef.current) return
+    const counterTweens: gsap.core.Tween[] = []
 
-    const counters = sectionRef.current.querySelectorAll<HTMLElement>('.metric-num')
-    counters.forEach((el) => {
-      const target = parseInt(el.dataset.value!)
-      const obj = { val: 0 }
-      ScrollTrigger.create({
-        trigger: el,
-        start: 'top 80%',
-        onEnter: () => gsap.to(obj, {
-          val: target,
-          duration: reducedMotion ? 0.001 : 1.5,
-          ease: 'power2.out',
-          onUpdate: () => { el.textContent = `${Math.round(obj.val)}+` },
-        }),
+    const ctx = gsap.context(() => {
+      const counters = sectionRef.current!.querySelectorAll<HTMLElement>('.metric-num')
+      counters.forEach((el) => {
+        const target = parseInt(el.dataset.value!)
+        const obj = { val: 0 }
+        ScrollTrigger.create({
+          trigger: el,
+          start: 'top 80%',
+          onEnter: () => {
+          const tween = gsap.to(obj, {
+              val: target,
+              duration: reducedMotion ? 0.001 : 1.5,
+              ease: 'power2.out',
+              onUpdate: () => { el.textContent = `${Math.round(obj.val)}+` },
+            })
+            counterTweens.push(tween)
+          },
+        })
       })
-    })
 
-    const words = sectionRef.current.querySelectorAll<HTMLElement>('.phil-word')
-    gsap.fromTo(words,
-      { opacity: 0, y: reducedMotion ? 0 : 10 },
-      {
-        opacity: 1, y: 0,
-        stagger: 0.05,
-        duration: reducedMotion ? 0.001 : 0.5,
-        ease: 'power2.out',
-        scrollTrigger: { trigger: sectionRef.current.querySelector('.philosophy'), start: 'top 70%' },
-      }
-    )
+      const words = sectionRef.current!.querySelectorAll<HTMLElement>('.phil-word')
+      gsap.fromTo(words,
+        { opacity: 0, y: reducedMotion ? 0 : 10 },
+        {
+          opacity: 1, y: 0,
+          stagger: 0.05,
+          duration: reducedMotion ? 0.001 : 0.5,
+          ease: 'power2.out',
+          scrollTrigger: { trigger: sectionRef.current!.querySelector('.philosophy'), start: 'top 70%' },
+        }
+      )
+    }, sectionRef)
 
-    return () => ScrollTrigger.getAll().forEach(t => t.kill())
+    return () => {
+      counterTweens.forEach((tween) => tween.kill())
+      ctx.revert()
+    }
   }, [reducedMotion])
 
   return (
@@ -81,7 +91,7 @@ export function WhyPhantom() {
       />
 
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-24 max-w-6xl mx-auto">
-        {/* Left — metrics */}
+        {/* Left â€” metrics */}
         <div>
           <h2 className="font-bebas text-black mb-12" style={{ fontSize: 'clamp(2.5rem, 4vw, 3.5rem)' }}>
             By The Numbers
@@ -100,8 +110,11 @@ export function WhyPhantom() {
           </div>
         </div>
 
-        {/* Right — philosophy */}
+        {/* Right â€” philosophy */}
         <div className="philosophy">
+          <p className="font-mono text-[0.65rem] tracking-widest uppercase text-black/40 mb-3">
+            <AnimatedVerbs words={['BUILD', 'DESIGN', 'SHIP']} />
+          </p>
           <h2 className="font-bebas text-black mb-12" style={{ fontSize: 'clamp(2.5rem, 4vw, 3.5rem)' }}>
             Our Philosophy
           </h2>
@@ -129,3 +142,4 @@ export function WhyPhantom() {
     </section>
   )
 }
+

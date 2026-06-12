@@ -5,6 +5,7 @@ import { HeroText }         from '@/components/hero/HeroText'
 import { ProblemSection }   from '@/components/problem/ProblemSection'
 import { WhyPhantom }       from '@/components/why/WhyPhantom'
 import { FooterSection }    from '@/components/footer/FooterSection'
+import { HeroExitTransition } from '@/components/transitions/HeroExitTransition'
 
 // Heavy 3D sections — dynamic imported
 const HeroScene       = dynamic(() => import('@/components/hero/HeroScene').then(m => ({ default: m.HeroScene })), { ssr: false })
@@ -23,6 +24,8 @@ export default function Home() {
         <HeroScene />
         <HeroText />
       </section>
+
+      <HeroExitTransition />
 
       <ProblemSection />
       <ServicesSection />

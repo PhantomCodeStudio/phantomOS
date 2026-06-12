@@ -57,3 +57,60 @@ body.loading { overflow: hidden; }
     transition-duration: 0.001ms !important;
   }
 }
+
+/* ─── AnimatedVerbs (T-08 adaptation) ───────────────────────── */
+.av-root {
+  display: inline-block;
+  overflow: hidden;
+  height: 1em;
+  vertical-align: bottom;
+  line-height: 1;
+}
+
+.av-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.av-track {
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+}
+
+.av-track--2 {
+  animation: av-cycle-2 4s cubic-bezier(0.6, 0, 0.4, 1) infinite;
+  animation-delay: 2s;
+}
+
+.av-track--3 {
+  animation: av-cycle-3 6s cubic-bezier(0.6, 0, 0.4, 1) infinite;
+  animation-delay: 2s;
+}
+
+.av-word {
+  display: block;
+  height: 1em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+@keyframes av-cycle-2 {
+  0%,  42% { transform: translateY(0); }
+  50%, 92% { transform: translateY(-50%); }
+  100%     { transform: translateY(0); }
+}
+
+@keyframes av-cycle-3 {
+  0%,  27% { transform: translateY(0); }
+  33%, 60% { transform: translateY(-33.333%); }
+  67%, 94% { transform: translateY(-66.667%); }
+  100%     { transform: translateY(0); }
+}

@@ -46,8 +46,8 @@ export function MetaballCanvas({ onBurst }: { onBurst?: () => void }) {
     }))
     blobsRef.current = blobs
 
-    // Rise on scroll
-    ScrollTrigger.create({
+    // Rise on scroll — stored so cleanup kills only this trigger
+    const blobTrigger = ScrollTrigger.create({
       trigger: canvas.parentElement,
       start: 'top 80%',
       onEnter: () => {
@@ -105,7 +105,7 @@ export function MetaballCanvas({ onBurst }: { onBurst?: () => void }) {
       cancelAnimationFrame(raf)
       window.removeEventListener('resize', resize)
       canvas.removeEventListener('mousemove', onMouse)
-      ScrollTrigger.getAll().forEach(t => t.kill())
+      blobTrigger.kill()
     }
   }, [])
 
