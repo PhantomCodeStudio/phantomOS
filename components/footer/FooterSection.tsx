@@ -13,7 +13,7 @@ const SOCIALS = [
 ]
 
 export function FooterSection() {
-  const [burst, setBurst] = useState(false)
+  const [, setBurst] = useState(false)
 
   return (
     <footer id="footer" className="relative min-h-screen bg-[#FFE900] overflow-hidden" aria-label="Footer">

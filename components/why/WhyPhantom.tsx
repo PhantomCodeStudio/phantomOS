@@ -91,7 +91,7 @@ export function WhyPhantom() {
       />
 
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-24 max-w-6xl mx-auto">
-        {/* Left â€” metrics */}
+        {/* Left - metrics */}
         <div>
           <h2 className="font-bebas text-black mb-12" style={{ fontSize: 'clamp(2.5rem, 4vw, 3.5rem)' }}>
             By The Numbers
@@ -110,7 +110,7 @@ export function WhyPhantom() {
           </div>
         </div>
 
-        {/* Right â€” philosophy */}
+        {/* Right - philosophy */}
         <div className="philosophy">
           <p className="font-mono text-[0.65rem] tracking-widest uppercase text-black/40 mb-3">
             <AnimatedVerbs words={['BUILD', 'DESIGN', 'SHIP']} />

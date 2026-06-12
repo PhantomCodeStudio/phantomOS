@@ -8,10 +8,18 @@ const TIERS = [
   { id: 'activations',   label: 'Brand Activations' },
   { id: 'xr',           label: 'XR Experiences' },
   { id: 'immersive',    label: 'Full Immersive' },
-]
+] as const
+
+type ServiceTier = (typeof TIERS)[number]['id']
 
 export function ContactForm({ onSuccess }: { onSuccess?: () => void }) {
-  const [form, setForm]   = useState({ name: '', email: '', company: '', tier: 'installations' as const, message: '' })
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    company: '',
+    tier: 'installations' as ServiceTier,
+    message: '',
+  })
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
 
   const set = (field: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
@@ -53,7 +61,7 @@ export function ContactForm({ onSuccess }: { onSuccess?: () => void }) {
               <input
                 type="radio" name="tier" value={t.id}
                 checked={form.tier === t.id}
-                onChange={() => setForm((f) => ({ ...f, tier: t.id as any }))}
+                onChange={() => setForm((f) => ({ ...f, tier: t.id }))}
                 className="sr-only"
               />
               <span className={`w-1.5 h-1.5 rounded-full transition-colors ${form.tier === t.id ? 'bg-black' : 'bg-black/20'}`} />

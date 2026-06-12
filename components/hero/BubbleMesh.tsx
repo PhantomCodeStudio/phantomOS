@@ -3,6 +3,7 @@ import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { Mesh, Vector3 } from 'three'
 import { useStore } from '@/lib/store'
+import type { IridescentMaterialInstance } from '@/lib/shaders/iridescent'
 import '@/lib/shaders/iridescent'
 
 interface Props {
@@ -20,7 +21,7 @@ export function BubbleMesh({ position, radius, phase }: Props) {
   useFrame(({ clock, camera, pointer }) => {
     if (reducedMotion) return
     const t   = clock.getElapsedTime()
-    const mat = meshRef.current?.material as any
+    const mat = meshRef.current?.material as IridescentMaterialInstance | undefined
     if (mat) { mat.uTime = t; mat.uCameraPosition = camera.position }
 
     // Buoyancy

@@ -2,6 +2,7 @@
 import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { Mesh, Color } from 'three'
+import type { IridescentMaterialInstance } from '@/lib/shaders/iridescent'
 import '@/lib/shaders/iridescent'
 
 export function PlasmaSphere() {
@@ -12,7 +13,7 @@ export function PlasmaSphere() {
     if (!ref.current) return
     ref.current.rotation.y = t * 0.3
     ref.current.rotation.x = Math.sin(t * 0.2) * 0.2
-    const mat = ref.current.material as any
+    const mat = ref.current.material as IridescentMaterialInstance
     if (mat) {
       mat.uTime = t
       mat.uCameraPosition = camera.position

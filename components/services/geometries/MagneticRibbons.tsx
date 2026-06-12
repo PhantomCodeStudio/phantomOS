@@ -3,6 +3,7 @@ import { useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { CatmullRomCurve3, Vector3, Color } from 'three'
 import { Mesh } from 'three'
+import type { IridescentMaterialInstance } from '@/lib/shaders/iridescent'
 import '@/lib/shaders/iridescent'
 
 export function MagneticRibbons() {
@@ -25,7 +26,7 @@ export function MagneticRibbons() {
       if (!mesh) return
       mesh.rotation.y = Math.sin(t * 0.2 + r.phase) * 0.3
       mesh.rotation.z = Math.cos(t * 0.15 + r.phase) * 0.2
-      const mat = mesh.material as any
+      const mat = mesh.material as IridescentMaterialInstance
       if (mat) { mat.uTime = t; mat.uCameraPosition = camera.position }
     })
   })

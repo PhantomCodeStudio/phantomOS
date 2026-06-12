@@ -1,7 +1,8 @@
 // lib/shaders/iridescent.ts
 import { shaderMaterial } from '@react-three/drei'
-import { Color, Vector3 } from 'three'
+import { Color, Texture, Vector3 } from 'three'
 import { extend } from '@react-three/fiber'
+import type { ShaderMaterial } from 'three'
 
 const vertexShader = /* glsl */`
   varying vec3 vNormal;
@@ -21,6 +22,8 @@ const fragmentShader = /* glsl */`
   uniform float uTime;
   uniform vec3  uCameraPosition;
   uniform vec3  uColor;
+  uniform sampler2D uAlphaMap;
+  uniform bool uUseAlphaMap;
   uniform float uFresnelPower;
   uniform float uRefractionStrength;
   uniform float uAlpha;
@@ -44,7 +47,8 @@ const fragmentShader = /* glsl */`
     vec3 color = mix(uColor, rainbow, fresnel * 0.8);
     float alpha = mix(uAlpha * 0.3, uAlpha, fresnel);
 
-    gl_FragColor = vec4(color, alpha);
+    float alphaMask = uUseAlphaMap ? texture2D(uAlphaMap, vUv).a : 1.0;
+    gl_FragColor = vec4(color, alpha * alphaMask);
   }
 `
 
@@ -53,6 +57,8 @@ export const IridescentMaterial = shaderMaterial(
     uTime:               0,
     uCameraPosition:     new Vector3(),
     uColor:              new Color('#4169FF'),
+    uAlphaMap:           new Texture(),
+    uUseAlphaMap:        false,
     uFresnelPower:       3.0,
     uRefractionStrength: 0.15,
     uAlpha:              0.85,
@@ -63,10 +69,21 @@ export const IridescentMaterial = shaderMaterial(
 
 extend({ IridescentMaterial })
 
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      iridescentMaterial: any
-    }
+export type IridescentMaterialUniforms = {
+  uTime: number
+  uCameraPosition: Vector3
+  uColor: Color
+  uAlphaMap: Texture
+  uUseAlphaMap: boolean
+  uFresnelPower: number
+  uRefractionStrength: number
+  uAlpha: number
+}
+
+export type IridescentMaterialInstance = ShaderMaterial & IridescentMaterialUniforms
+
+declare module '@react-three/fiber' {
+  interface ThreeElements {
+    iridescentMaterial: import('@react-three/fiber').ThreeElements['shaderMaterial'] & Partial<IridescentMaterialUniforms>
   }
 }
